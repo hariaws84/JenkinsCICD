@@ -11,5 +11,12 @@ pipeline {
                 echo 'Testing '
             }
         }
+
+         stage('deploying'){
+            steps{
+                sh 'touch /root/jenkins/pen.txt'
+                sh 'echo "hello welcome to jenkins >> /root/jenkins/pen.txt"'
+            }
+        }
       }
 }
