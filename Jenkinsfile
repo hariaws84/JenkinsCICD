@@ -15,7 +15,7 @@ pipeline {
          stage('deploying'){
             steps{
                 sh ' sudo touch /root/jenkins/pen.txt'
-                sh ' sudo echo "hello welcome to jenkins" >> /root/jenkins/pen.txt'
+                echo "hello welcome to jenkins" >> /root/jenkins/pen.txt
             }
         }
       }
