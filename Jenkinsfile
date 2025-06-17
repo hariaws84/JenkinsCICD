@@ -11,11 +11,10 @@ pipeline {
                 echo 'Testing '
             }
         }
-
-         stage('deploying'){
+        stage ('creating and writing the contents in the file'){
             steps{
-                sh ' sudo touch /root/jenkins/pen.txt'
-                echo "hello welcome to jenkins" >> /root/jenkins/pen.txt
+                sh ' sudo touch /root/jenkins/phone.txt'
+                sh 'echo "hello phone" | sudo tee -a /root/jenkins/phone.txt > /dev/null'
             }
         }
       }
