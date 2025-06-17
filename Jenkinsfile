@@ -11,6 +11,7 @@ pipeline {
             steps {
                 echo 'Building the webapp ...'
                 echo "The Value of ENV_VAR1 is : ${ENV_VAR1}"
+             
             } 
             post{
                 always{
@@ -46,6 +47,9 @@ pipeline {
                 sh ' sudo touch /root/jenkins/phone.txt'
                 sh 'echo "hello phone" | sudo tee -a /root/jenkins/phone.txt > /dev/null'
                 echo "The Value of ENV_VAR3 is : ${ENV_VAR3}"
+                sh 'echo The Value of ENV_VAR1 is : ${ENV_VAR1} | sudo tee -a /root/jenkins/phone.txt > /dev/null'
+                sh 'echo The Value of ENV_VAR2 is : ${ENV_VAR2} | sudo tee -a /root/jenkins/phone.txt > /dev/null'
+                sh 'echo The Value of ENV_VAR3 is : ${ENV_VAR3} | sudo tee -a /root/jenkins/phone.txt > /dev/null'
             }
             post{
                 always{
