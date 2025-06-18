@@ -7,6 +7,22 @@ pipeline {
         ENV_VAR3 = 'env var-3 value'
     }
     stages {
+        stage('parallel'){
+            parallel{
+                stage('Build') {
+                    steps{
+                        echo 'Building the webapp ...'
+                        echo "The Value of ENV_VAR1 is : ${ENV_VAR1}"
+                    }
+                }
+                stage('Testing') {
+                    steps{
+                        echo 'Testing '
+                        echo "The Value of ENV_VAR2 is : ${ENV_VAR2}"
+                    }
+                }                          
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building the webapp ...'
@@ -51,9 +67,9 @@ pipeline {
                 sh 'echo The Value of ENV_VAR1 is : ${ENV_VAR1} | sudo tee -a /root/jenkins/phone.txt > /dev/null'
                 sh 'echo The Value of ENV_VAR2 is : ${ENV_VAR2} | sudo tee -a /root/jenkins/phone.txt > /dev/null'
                 sh 'echo The Value of ENV_VAR3 is : ${ENV_VAR3} | sudo tee -a /root/jenkins/phone.txt > /dev/null'
-                sh 'echo The Branch name is : ${BRANCH_NAME} |sudo tee -a /root/jenkins/phone.txt > /dev/null'
-                
-                
+                sh ''' #!/bin/bash -xe 
+                ${BRANCH_NAME} | sudo tee -a /root/jenkins/phone.txt
+                '''
             }
             post{
                 always{
@@ -70,9 +86,12 @@ pipeline {
         stage('Priniting the environment variables') {
             steps {
                 echo "Listing all the environment variables"
-                sh 'printenv'
-               
+                sh ''' #!/bin/bash -xe
+                printenv | sudo tee -a /root/jenkins/phone.txt
+               '''
             }
         }
+        
+
       }
 }
