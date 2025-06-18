@@ -28,7 +28,7 @@ pipeline {
                 echo 'Building the webapp ...'
                 echo "The Value of ENV_VAR1 is : ${ENV_VAR1}"
                 sh 'The Build number is : ${BUILD_NUMBER}| sudo tee -a /root/jenkins/phone.txt > /dev/null' 
-             
+                echo 'GIT_BRANCH = ${GIT_BRANCH}'
             } 
             post{
                 always{
@@ -68,7 +68,7 @@ pipeline {
                 sh 'echo The Value of ENV_VAR2 is : ${ENV_VAR2} | sudo tee -a /root/jenkins/phone.txt > /dev/null'
                 sh 'echo The Value of ENV_VAR3 is : ${ENV_VAR3} | sudo tee -a /root/jenkins/phone.txt > /dev/null'
                 sh ''' #!/bin/bash -xe 
-                ${BRANCH_NAME} | sudo tee -a /root/jenkins/phone.txt
+                ${GIT_BRANCH} | sudo tee -a /root/jenkins/phone.txt
                 '''
             }
             post{
@@ -84,6 +84,12 @@ pipeline {
             }
         }
         stage('Priniting the environment variables') {
+            when{
+                expression{
+                    return env.GIT_BRANCH == 'origin/main'
+                }
+                
+            }
             steps {
                 echo "Listing all the environment variables"
                 sh ''' #!/bin/bash -xe
@@ -95,3 +101,4 @@ pipeline {
 
       }
 }
+
