@@ -11,6 +11,7 @@ pipeline {
             steps {
                 echo 'Building the webapp ...'
                 echo "The Value of ENV_VAR1 is : ${ENV_VAR1}"
+                sh 'The Build number is : ${BUILD_NUMBER}| sudo tee -a /root/jenkins/phone.txt > /dev/null' 
              
             } 
             post{
@@ -50,6 +51,9 @@ pipeline {
                 sh 'echo The Value of ENV_VAR1 is : ${ENV_VAR1} | sudo tee -a /root/jenkins/phone.txt > /dev/null'
                 sh 'echo The Value of ENV_VAR2 is : ${ENV_VAR2} | sudo tee -a /root/jenkins/phone.txt > /dev/null'
                 sh 'echo The Value of ENV_VAR3 is : ${ENV_VAR3} | sudo tee -a /root/jenkins/phone.txt > /dev/null'
+                sh 'echo The Branch name is : ${BRANCH_NAME} |sudo tee -a /root/jenkins/phone.txt > /dev/null'
+                
+                
             }
             post{
                 always{
@@ -61,6 +65,13 @@ pipeline {
                 failure {
                     echo "This will run the stage is failure"
                 }
+            }
+        }
+        stage('Priniting the environment variables') {
+            steps {
+                echo "Listing all the environment variables"
+                sh 'printenv'
+               
             }
         }
       }
